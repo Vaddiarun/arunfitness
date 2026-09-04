@@ -5,7 +5,6 @@ export const transformations = [
   { id: 'b', name: 'Client 02', meta: 'Body recomposition', muted: true, before: 'images/client-04.png', after: 'images/client-06.png' },
   { id: 'c', name: 'Client 03', meta: 'Muscle building', muted: true, before: 'images/client-05.png', after: 'images/client-02.png' },
   { id: 'f', name: 'Hithesh', meta: 'Muscle building', before: 'images/client-11.png', after: 'images/client-12.png' },
-  { id: 'd', name: 'Client 04', meta: '25 days', highlight: true, muted: true, before: 'images/client-08.png', after: 'images/client-07.png' },
   { id: 'e', name: 'Client 05', meta: 'Body recomposition', muted: true, before: 'images/client-09.png', after: 'images/client-10.png' },
 ];
 
