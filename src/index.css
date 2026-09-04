@@ -1,0 +1,58 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-bg text-ink font-body m-0;
+  }
+  a {
+    @apply text-accent-300 no-underline;
+  }
+  a:hover {
+    @apply text-accent-200;
+  }
+  ::selection {
+    @apply bg-accent-800;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center gap-3 px-[30px] py-[18px] border border-accent rounded-md text-[13px] tracking-[0.16em] uppercase text-accent-100 bg-accent-900 transition-colors hover:bg-accent-800;
+  }
+  .btn-ghost {
+    @apply inline-flex items-center gap-3 px-[30px] py-[18px] border border-neutral-700 rounded-md text-[13px] tracking-[0.16em] uppercase text-neutral-200 transition-colors hover:border-accent hover:text-accent-200;
+  }
+  .btn-outline {
+    @apply inline-flex items-center px-7 py-[17px] border border-accent rounded-md text-[13px] tracking-[0.16em] uppercase text-accent-200 transition-colors hover:bg-accent-900 hover:text-accent-100;
+  }
+  .section {
+    @apply px-6 py-[90px] border-t border-divider;
+  }
+  .wrap {
+    @apply max-w-[1280px] mx-auto;
+  }
+  .h-display {
+    @apply font-heading font-medium leading-none tracking-[-0.04em];
+  }
+  .eyebrow {
+    @apply text-[11px] tracking-[0.3em] uppercase text-accent-300;
+  }
+  .field {
+    @apply px-3.5 py-3.5 min-h-[48px] bg-surface border border-neutral-800 rounded-md text-ink font-body text-[15px];
+  }
+  .reveal {
+    @apply opacity-0 translate-y-[18px] transition-[opacity,transform] duration-700 ease-out;
+  }
+  .reveal-in {
+    @apply opacity-100 translate-y-0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001s !important;
+    transition-duration: 0.001s !important;
+  }
+}
