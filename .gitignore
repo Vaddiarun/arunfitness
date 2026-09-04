@@ -4,3 +4,6 @@ dist
 *.local
 .vercel
 *.log
+
+# unblurred source photos - never commit
+public/images/*-raw.*
