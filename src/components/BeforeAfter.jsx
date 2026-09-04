@@ -31,8 +31,8 @@ export default function BeforeAfter({ before, after, initial = 50 }) {
         <img src={after} alt="After" className="w-full h-full object-cover pointer-events-none" />
       </div>
       <div className="absolute inset-y-0 w-0.5 bg-accent shadow-[0_0_0_1px_rgba(22,24,38,0.5)]" style={{ left: `${pct}%` }} />
-      <span className="absolute left-3.5 top-3.5 px-2.5 py-1.5 rounded-sm bg-bg/70 text-[10px] tracking-[0.2em] text-neutral-300">BEFORE</span>
-      <span className="absolute right-3.5 top-3.5 px-2.5 py-1.5 rounded-sm bg-bg/70 text-[10px] tracking-[0.2em] text-accent-200">AFTER</span>
+      <span className="absolute left-3.5 top-3.5 px-2.5 py-1.5 rounded-sm bg-bg/70 text-[10px] tracking-[0.2em] text-neutral-300">AFTER</span>
+      <span className="absolute right-3.5 top-3.5 px-2.5 py-1.5 rounded-sm bg-bg/70 text-[10px] tracking-[0.2em] text-accent-200">BEFORE</span>
     </div>
   );
 }

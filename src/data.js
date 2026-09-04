@@ -1,10 +1,10 @@
 import { wa } from './lib/config';
 
 export const transformations = [
-  { id: 'a', name: 'Manthesh', meta: 'Fat loss', before: 'images/client-03.png', after: 'images/client-01.png' },
+  { id: 'a', name: 'Client 01', meta: 'Fat loss', before: 'images/client-03.png', after: 'images/client-01.png' },
   { id: 'b', name: 'Client 02', meta: 'Body recomposition', muted: true, before: 'images/client-04.png', after: 'images/client-06.png' },
   { id: 'c', name: 'Client 03', meta: 'Muscle building', muted: true, before: 'images/client-05.png', after: 'images/client-02.png' },
-  { id: 'f', name: 'Hithesh', meta: 'Muscle building', before: 'images/client-11.png', after: 'images/client-12.png' },
+  { id: 'f', name: 'Client 04', meta: 'Muscle building', before: 'images/client-11.png', after: 'images/client-12.png' },
   { id: 'e', name: 'Client 05', meta: 'Body recomposition', muted: true, before: 'images/client-09.png', after: 'images/client-10.png' },
 ];
 
