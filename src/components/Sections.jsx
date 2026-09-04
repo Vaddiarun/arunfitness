@@ -2,7 +2,8 @@ import { useRef, useState } from 'react';
 import BeforeAfter from './BeforeAfter';
 import { LogoMark } from './Chrome';
 import { useCountUp } from '../hooks/useReveal';
-import { wa, INSTAGRAM_URL, INSTAGRAM_HANDLE, EMAIL, PHONE } from '../lib/config';
+import { wa, INSTAGRAM_URL, INSTAGRAM_HANDLE, EMAIL, PHONE, CONSULTATION_FEE } from '../lib/config';
+import { usePayment } from '../context/PaymentContext';
 import {
   transformations,
   categories,
@@ -112,6 +113,7 @@ export function Results() {
 }
 
 export function Categories() {
+  const { openPaymentModal } = usePayment();
   return (
     <section className="section">
       <div className="wrap pb-11">
@@ -129,14 +131,13 @@ export function Categories() {
               <div className="font-heading font-medium text-[25px] leading-tight tracking-[-0.02em]">{c.title}</div>
               <div className="text-[15px] leading-relaxed text-neutral-400">{c.body}</div>
             </div>
-            <a
-              href={c.href}
-              target="_blank"
-              rel="noopener"
-              className="self-start px-[18px] py-3 border border-neutral-700 rounded-md text-[11px] tracking-[0.18em] uppercase text-neutral-200 transition-colors hover:border-accent hover:text-accent-200"
+            <button
+              type="button"
+              onClick={() => openPaymentModal({ topic: `${c.title} Program` })}
+              className="self-start px-[18px] py-3 border border-neutral-700 rounded-md text-[11px] tracking-[0.18em] uppercase text-neutral-200 transition-colors hover:border-accent hover:text-accent-200 cursor-pointer"
             >
-              {c.cta}
-            </a>
+              {c.cta} (₹{CONSULTATION_FEE})
+            </button>
           </div>
         ))}
       </div>
@@ -145,6 +146,7 @@ export function Categories() {
 }
 
 export function FortyFive() {
+  const { openPaymentModal } = usePayment();
   return (
     <section className="section">
       <div className="wrap grid grid-cols-[repeat(auto-fit,minmax(320px,1fr))] gap-16 items-start">
@@ -154,9 +156,13 @@ export function FortyFive() {
           <p className="m-0 max-w-[46ch] text-lg leading-relaxed text-neutral-300">
             You don't need another random workout plan. You need structure, accountability and a plan built around you.
           </p>
-          <a href={wa("Hi Arun, I'm interested in your 45-day transformation program.")} target="_blank" rel="noopener" className="btn-primary self-start">
-            I'm ready — start my 45 days <span className="text-base">→</span>
-          </a>
+          <button
+            type="button"
+            onClick={() => openPaymentModal({ topic: '45-Day Transformation' })}
+            className="btn-primary self-start cursor-pointer"
+          >
+            I'm ready — start my 45 days (₹{CONSULTATION_FEE}) <span className="text-base">→</span>
+          </button>
         </div>
         <div className="reveal flex flex-col">
           {timeline.map((s) => (
@@ -172,6 +178,7 @@ export function FortyFive() {
 }
 
 export function Wedding() {
+  const { openPaymentModal } = usePayment();
   return (
     <section className="section">
       <div className="wrap grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-14 items-center">
@@ -187,9 +194,13 @@ export function Wedding() {
           <p className="m-0 max-w-[46ch] text-lg leading-relaxed text-neutral-300">
             Look sharper. Feel stronger. Walk into your wedding with confidence.
           </p>
-          <a href={wa("Hi Arun, I'm interested in a wedding transformation.")} target="_blank" rel="noopener" className="btn-outline self-start">
-            Plan my wedding transformation
-          </a>
+          <button
+            type="button"
+            onClick={() => openPaymentModal({ topic: 'Wedding Transformation' })}
+            className="btn-outline self-start cursor-pointer"
+          >
+            Plan my wedding transformation (₹{CONSULTATION_FEE})
+          </button>
         </div>
         <div className="reveal grid grid-cols-2 gap-px bg-divider rounded-md overflow-hidden">
           {weddingBits.map((b) => (
@@ -204,6 +215,7 @@ export function Wedding() {
 }
 
 export function FatToFit() {
+  const { openPaymentModal } = usePayment();
   return (
     <section className="section">
       <div className="wrap flex flex-col gap-12">
@@ -226,9 +238,13 @@ export function FatToFit() {
         <p className="reveal m-0 max-w-[56ch] text-lg leading-relaxed text-neutral-300">
           Your starting point doesn't matter as much as the system you follow consistently.
         </p>
-        <a href={wa('Hi Arun, I want to start my fat-loss transformation.')} target="_blank" rel="noopener" className="reveal btn-outline self-start">
-          Start from where you are
-        </a>
+        <button
+          type="button"
+          onClick={() => openPaymentModal({ topic: 'Fat Loss Transformation' })}
+          className="reveal btn-outline self-start cursor-pointer"
+        >
+          Start from where you are (₹{CONSULTATION_FEE})
+        </button>
       </div>
     </section>
   );
@@ -299,6 +315,7 @@ export function Personalization() {
 }
 
 export function WhatsAppCoaching() {
+  const { openPaymentModal } = usePayment();
   return (
     <section className="section">
       <div className="wrap grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-14 items-center">
@@ -311,9 +328,13 @@ export function WhatsAppCoaching() {
           <p className="m-0 max-w-[42ch] text-[17px] leading-relaxed text-neutral-300">
             Accessibility, accountability and personal coaching — on the app you already use every day.
           </p>
-          <a href={wa('Hi Arun, I want to know about your online personal training.')} target="_blank" rel="noopener" className="btn-outline self-start">
-            Chat with Arun
-          </a>
+          <button
+            type="button"
+            onClick={() => openPaymentModal({ topic: '1:1 WhatsApp Coaching' })}
+            className="btn-outline self-start cursor-pointer"
+          >
+            Chat with Arun (₹{CONSULTATION_FEE})
+          </button>
         </div>
         <div className="reveal w-full max-w-[420px] p-[22px] bg-surface rounded-lg shadow-md flex flex-col gap-3.5">
           {chatThread.map((m, i) => (
@@ -417,6 +438,7 @@ export function Instagram() {
 }
 
 export function Programs() {
+  const { openPaymentModal } = usePayment();
   return (
     <section id="programs" className="section">
       <div className="wrap flex flex-col gap-11">
@@ -436,9 +458,14 @@ export function Programs() {
                   ))}
                 </div>
               </div>
-              <a href={p.href} target="_blank" rel="noopener" className="self-start px-[22px] py-3.5 border border-accent rounded-md text-xs tracking-[0.16em] uppercase text-accent-200 transition-colors hover:bg-accent-900 hover:text-accent-100">
-                {p.cta}
-              </a>
+              <button
+                type="button"
+                onClick={() => openPaymentModal({ topic: `${p.title}` })}
+                className="self-start px-[22px] py-3.5 border border-accent rounded-md text-xs tracking-[0.16em] uppercase text-accent-200 transition-colors hover:bg-accent-900 hover:text-accent-100 cursor-pointer flex items-center gap-2"
+              >
+                <span>{p.cta}</span>
+                <span className="text-accent-300 font-bold">• ₹{CONSULTATION_FEE}</span>
+              </button>
             </div>
           ))}
         </div>
@@ -448,6 +475,7 @@ export function Programs() {
 }
 
 export function FinalCta() {
+  const { openPaymentModal } = usePayment();
   return (
     <section className="px-6 py-[134px] border-t border-divider bg-[radial-gradient(120%_80%_at_50%_0%,#2b2741_0%,#161826_62%)]">
       <div className="max-w-[1000px] mx-auto flex flex-col items-center gap-[30px] text-center">
@@ -465,9 +493,13 @@ export function FinalCta() {
           <a href="#apply" className="btn-primary">
             Start my transformation →
           </a>
-          <a href={wa('Hi Arun, I want to know about your online personal training.')} target="_blank" rel="noopener" className="btn-ghost">
-            WhatsApp Arun
-          </a>
+          <button
+            type="button"
+            onClick={() => openPaymentModal({ topic: 'Transformation Consultation' })}
+            className="btn-ghost cursor-pointer"
+          >
+            WhatsApp Arun (₹{CONSULTATION_FEE})
+          </button>
         </div>
         <div className="flex flex-col items-center gap-2.5 px-[26px] py-5 border border-accent rounded-md">
           <div className="font-heading font-medium text-[clamp(20px,2.6vw,28px)] tracking-[-0.01em] text-accent-200">100% MONEY BACK</div>
@@ -480,6 +512,7 @@ export function FinalCta() {
 }
 
 export function Footer() {
+  const { openPaymentModal } = usePayment();
   return (
     <footer className="px-6 pt-[68px] pb-[134px] border-t border-divider">
       <div className="wrap grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-10">
@@ -498,9 +531,13 @@ export function Footer() {
           <a href={INSTAGRAM_URL} target="_blank" rel="noopener">
             Instagram
           </a>
-          <a href={wa('Hi Arun, I want to know about your online personal training.')} target="_blank" rel="noopener">
-            WhatsApp
-          </a>
+          <button
+            type="button"
+            onClick={() => openPaymentModal({ topic: 'Footer WhatsApp Inquiry' })}
+            className="text-left bg-transparent border-0 p-0 text-accent-300 hover:text-accent-200 cursor-pointer text-sm"
+          >
+            WhatsApp (₹{CONSULTATION_FEE})
+          </button>
           <a href="#apply">Apply</a>
         </div>
         <div className="flex flex-col gap-2.5 text-sm text-neutral-400">
@@ -514,19 +551,22 @@ export function Footer() {
 }
 
 export function FloatingCtas() {
+  const { openPaymentModal } = usePayment();
   return (
     <>
-      <a
-        href={wa('Hi Arun, I want to know about your online personal training.')}
-        target="_blank"
-        rel="noopener"
-        aria-label="WhatsApp Arun"
-        className="fixed right-5 bottom-[88px] z-[60] w-14 h-14 flex items-center justify-center border border-accent rounded-full bg-accent-900 shadow-md transition-colors hover:bg-accent-800"
+      <button
+        type="button"
+        onClick={() => openPaymentModal({ topic: 'Floating WhatsApp Consultation' })}
+        aria-label="Connect with Arun on WhatsApp"
+        className="fixed right-5 bottom-[88px] z-[60] w-14 h-14 flex items-center justify-center border border-accent rounded-full bg-accent-900 shadow-md transition-colors hover:bg-accent-800 cursor-pointer group"
       >
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#e7e5fe" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
           <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8z" />
         </svg>
-      </a>
+        <span className="absolute -top-1.5 -right-1.5 bg-accent-400 text-bg text-[10px] font-bold px-1.5 py-0.5 rounded-full shadow-sm">
+          ₹{CONSULTATION_FEE}
+        </span>
+      </button>
       <div className="fixed inset-x-0 bottom-0 z-[55] flex gap-2.5 px-4 py-3 bg-bg/90 backdrop-blur-md border-t border-divider">
         <a
           href="#apply"

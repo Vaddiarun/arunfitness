@@ -1,19 +1,23 @@
 import { useState } from 'react';
-import { wa } from '../lib/config';
+import { usePayment } from '../context/PaymentContext';
+import { CONSULTATION_FEE } from '../lib/config';
 import { quizGoals, quizWhens, faqs } from '../data';
 
 export function Quiz() {
   const [goal, setGoal] = useState(null);
   const [when, setWhen] = useState(null);
+  const { openPaymentModal } = usePayment();
 
   const chip = (active) =>
-    `px-[18px] py-[13px] min-h-[44px] rounded-md text-[13px] tracking-[0.06em] border transition-colors ${
+    `px-[18px] py-[13px] min-h-[44px] rounded-md text-[13px] tracking-[0.06em] border transition-colors cursor-pointer ${
       active ? 'bg-accent-900 border-accent text-accent-100' : 'bg-transparent border-neutral-700 text-neutral-300 hover:border-accent'
     }`;
 
-  const href = wa(
-    `Hi Arun, I found you through your website. My goal is ${goal || 'a transformation'} and I want to start ${(when || 'soon').toLowerCase()}. I'd like to know more.`
-  );
+  const handleRecommendation = () => {
+    openPaymentModal({
+      topic: `Program Recommendation (${goal || 'Transformation'} · ${when || 'Starting soon'})`,
+    });
+  };
 
   return (
     <section className="section">
@@ -42,10 +46,16 @@ export function Quiz() {
           </div>
         </div>
 
-        <a href={href} target="_blank" rel="noopener" className="btn-primary self-start">
-          Get my recommendation <span className="text-base">→</span>
-        </a>
-        <p className="m-0 text-[13px] text-neutral-600">Opens WhatsApp with your answers already written out.</p>
+        <button
+          type="button"
+          onClick={handleRecommendation}
+          className="btn-primary self-start cursor-pointer"
+        >
+          Get my recommendation (₹{CONSULTATION_FEE}) <span className="text-base">→</span>
+        </button>
+        <p className="m-0 text-[13px] text-neutral-500">
+          Pay ₹{CONSULTATION_FEE} consultation fee to connect directly with Arun on WhatsApp for your custom roadmap.
+        </p>
       </div>
     </section>
   );
@@ -65,6 +75,7 @@ const FIELDS = [
 
 export function ApplyForm() {
   const [applicant, setApplicant] = useState(null);
+  const { openPaymentModal } = usePayment();
 
   const submit = (e) => {
     e.preventDefault();
@@ -74,21 +85,44 @@ export function ApplyForm() {
       data[name] = (f.get(name) || '').toString().trim();
     });
     setApplicant(data);
+    // Directly open payment modal with applicant info
+    openPaymentModal({
+      topic: `Application: ${data.goal || 'Coaching'} (Level: ${data.level || 'Beginner'})`,
+      defaultDetails: {
+        name: data.name,
+        phone: data.whatsapp,
+        whatsapp: data.whatsapp,
+      },
+    });
   };
 
   if (applicant) {
-    const lines = FIELDS.filter(({ name }) => applicant[name]).map(({ name, label }) => `${label}: ${applicant[name]}`);
-    const href = wa(`Hi Arun, I just submitted the transformation application on your website.\n\n${lines.join('\n')}`);
     return (
       <section id="apply" className="section">
         <div className="max-w-[900px] mx-auto flex flex-col gap-6 py-12">
+          <div className="inline-block px-3 py-1 bg-accent-900 border border-accent rounded-full text-xs uppercase tracking-wider text-accent-200 self-start">
+            Application Received
+          </div>
           <h2 className="h-display text-[clamp(32px,4.4vw,56px)] leading-[1.02] m-0">ONE LAST STEP.</h2>
           <p className="m-0 text-lg leading-relaxed text-neutral-300">
-            Tap below to send your details to Arun on WhatsApp — your answers are already written out. Hit send and Arun will take it from there.
+            Complete your ₹{CONSULTATION_FEE} consultation fee to connect directly with Arun on WhatsApp. Your application answers will be sent straight to Arun for your initial assessment.
           </p>
-          <a href={href} target="_blank" rel="noopener" className="btn-primary self-start">
-            Send my details on WhatsApp <span className="text-base">→</span>
-          </a>
+          <button
+            type="button"
+            onClick={() =>
+              openPaymentModal({
+                topic: `Application: ${applicant.goal || 'Coaching'}`,
+                defaultDetails: {
+                  name: applicant.name,
+                  phone: applicant.whatsapp,
+                  whatsapp: applicant.whatsapp,
+                },
+              })
+            }
+            className="btn-primary self-start cursor-pointer"
+          >
+            Pay ₹{CONSULTATION_FEE} &amp; Connect with Arun <span className="text-base">→</span>
+          </button>
         </div>
       </section>
     );
