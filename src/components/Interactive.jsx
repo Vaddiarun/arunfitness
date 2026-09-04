@@ -60,7 +60,6 @@ const FIELDS = [
   { name: 'goal', label: 'Goal', options: ['Fat loss', 'Muscle gain', 'Wedding transformation', 'Body recomposition', 'General fitness', 'Other'] },
   { name: 'level', label: 'Current fitness level', options: ['Beginner', 'Intermediate', 'Advanced'] },
   { name: 'whatsapp', label: 'WhatsApp number', required: true, inputMode: 'tel' },
-  { name: 'instagram', label: 'Instagram username', placeholder: '@' },
   { name: 'start', label: 'When do you want to start?', options: ['Immediately', 'Within 2 weeks', 'This month', 'Just exploring'] },
 ];
 
@@ -70,23 +69,25 @@ export function ApplyForm() {
   const submit = (e) => {
     e.preventDefault();
     const f = new FormData(e.currentTarget);
-    const g = (k) => (f.get(k) || '').toString().trim();
-    setApplicant({ name: g('name'), goal: g('goal'), start: g('start') });
+    const data = {};
+    FIELDS.forEach(({ name }) => {
+      data[name] = (f.get(name) || '').toString().trim();
+    });
+    setApplicant(data);
   };
 
   if (applicant) {
-    const href = wa(
-      `Hi Arun, I just submitted the application on your website. I'm ${applicant.name || 'ready to start'} — goal: ${applicant.goal}, starting ${applicant.start.toLowerCase()}.`
-    );
+    const lines = FIELDS.filter(({ name }) => applicant[name]).map(({ name, label }) => `${label}: ${applicant[name]}`);
+    const href = wa(`Hi Arun, I just submitted the transformation application on your website.\n\n${lines.join('\n')}`);
     return (
       <section id="apply" className="section">
         <div className="max-w-[900px] mx-auto flex flex-col gap-6 py-12">
-          <h2 className="h-display text-[clamp(32px,4.4vw,56px)] leading-[1.02] m-0">APPLICATION RECEIVED.</h2>
+          <h2 className="h-display text-[clamp(32px,4.4vw,56px)] leading-[1.02] m-0">ONE LAST STEP.</h2>
           <p className="m-0 text-lg leading-relaxed text-neutral-300">
-            Your transformation starts with one decision. Arun will connect with you on WhatsApp.
+            Tap below to send your details to Arun on WhatsApp — your answers are already written out. Hit send and Arun will take it from there.
           </p>
           <a href={href} target="_blank" rel="noopener" className="btn-primary self-start">
-            Message Arun now
+            Send my details on WhatsApp <span className="text-base">→</span>
           </a>
         </div>
       </section>
