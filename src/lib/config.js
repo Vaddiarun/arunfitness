@@ -7,5 +7,5 @@ export const PHONE = '+91 79897 59695';
 export const wa = (message) =>
   `https://wa.me/${WHATSAPP_NUMBER.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(message)}`;
 
-export const RAZORPAY_KEY_ID = import.meta.env.VITE_RAZORPAY_KEY_ID || 'rzp_test_TY0eTT6X1XagtM';
+export const RAZORPAY_KEY_ID = import.meta.env.VITE_RAZORPAY_KEY_ID || 'rzp_live_TYGAGP9BpCf7mC';
 export const CONSULTATION_FEE = 500; // ₹500 WhatsApp consultation fee
