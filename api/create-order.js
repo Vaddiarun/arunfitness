@@ -77,12 +77,12 @@ export default async function handler(req, res) {
     return sendJson(res, 405, { error: 'Method Not Allowed. Use POST.' });
   }
 
-  const key_id = process.env.RAZORPAY_KEY_ID;
+  const key_id = process.env.RAZORPAY_KEY_ID || process.env.VITE_RAZORPAY_KEY_ID;
   const key_secret = process.env.RAZORPAY_KEY_SECRET;
 
   if (!key_id || !key_secret) {
     return sendJson(res, 401, {
-      error: 'Razorpay credentials not configured on server.',
+      error: 'Razorpay credentials not configured on server. Please add RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET in your Vercel Environment Variables and redeploy.',
     });
   }
 
