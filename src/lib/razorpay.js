@@ -25,7 +25,7 @@ export function loadRazorpayScript() {
  * 3. On success, calls backend /api/verify-payment to verify signature
  */
 export async function initiateRazorpayPayment({
-  amount, // in INR
+  type = 'consultation', // 'consultation' | 'plan_45day' | 'plan_wedding' — server decides the amount
   customer = {},
   title = 'Arun Kumar Coaching',
   description = '1:1 WhatsApp Consultation & Assessment',
@@ -40,17 +40,17 @@ export async function initiateRazorpayPayment({
     return;
   }
 
-  // Step 1: Create Order on backend
+  // Step 1: Create Order on backend — we only tell it WHICH product this is;
+  // the server looks up the real amount so it can't be tampered with client-side.
   let orderData;
   try {
-    const amountInPaise = Math.round(Number(amount) * 100);
     const orderRes = await fetch('/api/create-order', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        amount: amountInPaise,
+        type,
         currency: 'INR',
         receipt: `rcpt_${Date.now()}`,
         notes: {

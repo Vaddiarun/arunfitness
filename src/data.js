@@ -71,6 +71,9 @@ export const programs = [
     includes: ['Personalized training', 'Nutrition guidance', 'Progress tracking', 'Accountability', 'WhatsApp coaching'],
     cta: 'Start 45 days',
     href: wa("Hi Arun, I'm interested in your 45-day transformation program."),
+    price: 6000,
+    payType: 'plan_45day',
+    note: 'Terms: 45 days is the structured program length, not a results guarantee — actual timeline can extend depending on your consistency, effort and support.',
   },
   {
     no: 'PROGRAM 02',
@@ -87,6 +90,9 @@ export const programs = [
     includes: ['Goal-based training', 'Nutrition', 'Progress tracking', 'Timeline planning', 'Accountability'],
     cta: 'Get wedding ready',
     href: wa("Hi Arun, I'm interested in a wedding transformation."),
+    price: 6999,
+    payType: 'plan_wedding',
+    note: 'Terms: results and readiness by your wedding date depend on your consistency, effort and support, and on how much time remains before the date.',
   },
 ];
 

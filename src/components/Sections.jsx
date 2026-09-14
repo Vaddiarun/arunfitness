@@ -156,13 +156,27 @@ export function FortyFive() {
           <p className="m-0 max-w-[46ch] text-lg leading-relaxed text-neutral-300">
             You don't need another random workout plan. You need structure, accountability and a plan built around you.
           </p>
-          <button
-            type="button"
-            onClick={() => openPaymentModal({ topic: '45-Day Transformation' })}
-            className="btn-primary self-start cursor-pointer"
-          >
-            I'm ready — start my 45 days (₹{CONSULTATION_FEE}) <span className="text-base">→</span>
-          </button>
+          <div className="flex flex-wrap gap-3.5">
+            <button
+              type="button"
+              onClick={() =>
+                openPaymentModal({ topic: '45-Day Transformation — Full Enrollment', type: 'plan_45day', amount: 6000 })
+              }
+              className="btn-primary self-start cursor-pointer"
+            >
+              Enroll now — ₹6,000 <span className="text-base">→</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => openPaymentModal({ topic: '45-Day Transformation' })}
+              className="btn-ghost self-start cursor-pointer"
+            >
+              Talk to Arun first (₹{CONSULTATION_FEE})
+            </button>
+          </div>
+          <p className="m-0 max-w-[46ch] text-[12px] leading-relaxed text-neutral-500">
+            Terms: 45 days is the structured program length, not a results guarantee — actual timeline can extend depending on your consistency, effort and support.
+          </p>
         </div>
         <div className="reveal flex flex-col">
           {timeline.map((s) => (
@@ -194,13 +208,27 @@ export function Wedding() {
           <p className="m-0 max-w-[46ch] text-lg leading-relaxed text-neutral-300">
             Look sharper. Feel stronger. Walk into your wedding with confidence.
           </p>
-          <button
-            type="button"
-            onClick={() => openPaymentModal({ topic: 'Wedding Transformation' })}
-            className="btn-outline self-start cursor-pointer"
-          >
-            Plan my wedding transformation (₹{CONSULTATION_FEE})
-          </button>
+          <div className="flex flex-wrap gap-3.5">
+            <button
+              type="button"
+              onClick={() =>
+                openPaymentModal({ topic: 'Wedding Transformation — Full Enrollment', type: 'plan_wedding', amount: 6999 })
+              }
+              className="btn-primary self-start cursor-pointer"
+            >
+              Enroll now — ₹6,999
+            </button>
+            <button
+              type="button"
+              onClick={() => openPaymentModal({ topic: 'Wedding Transformation' })}
+              className="btn-outline self-start cursor-pointer"
+            >
+              Talk to Arun first (₹{CONSULTATION_FEE})
+            </button>
+          </div>
+          <p className="m-0 max-w-[46ch] text-[12px] leading-relaxed text-neutral-500">
+            Terms: results and readiness by your wedding date depend on your consistency, effort and support, and on how much time remains before the date.
+          </p>
         </div>
         <div className="reveal grid grid-cols-2 gap-px bg-divider rounded-md overflow-hidden">
           {weddingBits.map((b) => (
@@ -458,14 +486,29 @@ export function Programs() {
                   ))}
                 </div>
               </div>
-              <button
-                type="button"
-                onClick={() => openPaymentModal({ topic: `${p.title}` })}
-                className="self-start px-[22px] py-3.5 border border-accent rounded-md text-xs tracking-[0.16em] uppercase text-accent-200 transition-colors hover:bg-accent-900 hover:text-accent-100 cursor-pointer flex items-center gap-2"
-              >
-                <span>{p.cta}</span>
-                <span className="text-accent-300 font-bold">• ₹{CONSULTATION_FEE}</span>
-              </button>
+              <div className="flex flex-col gap-2.5">
+                {p.price && (
+                  <button
+                    type="button"
+                    onClick={() =>
+                      openPaymentModal({ topic: `${p.title} — Full Enrollment`, type: p.payType, amount: p.price })
+                    }
+                    className="self-start px-[22px] py-3.5 rounded-md text-xs tracking-[0.16em] uppercase bg-accent-900 border border-accent text-accent-100 transition-colors hover:bg-accent-800 cursor-pointer flex items-center gap-2"
+                  >
+                    <span>Enroll now</span>
+                    <span className="font-bold">• ₹{p.price.toLocaleString('en-IN')}</span>
+                  </button>
+                )}
+                <button
+                  type="button"
+                  onClick={() => openPaymentModal({ topic: `${p.title}` })}
+                  className="self-start px-[22px] py-3.5 border border-accent rounded-md text-xs tracking-[0.16em] uppercase text-accent-200 transition-colors hover:bg-accent-900 hover:text-accent-100 cursor-pointer flex items-center gap-2"
+                >
+                  <span>{p.price ? 'Talk to Arun first' : p.cta}</span>
+                  <span className="text-accent-300 font-bold">• ₹{CONSULTATION_FEE}</span>
+                </button>
+                {p.note && <p className="m-0 text-[11px] leading-relaxed text-neutral-500 max-w-[36ch]">{p.note}</p>}
+              </div>
             </div>
           ))}
         </div>

@@ -93,12 +93,22 @@ export default async function handler(req, res) {
     return sendJson(res, 400, { error: 'Invalid JSON payload.' });
   }
 
-  const { amount, currency = 'INR', receipt, notes } = body || {};
+  const { currency = 'INR', receipt, notes, type } = body || {};
 
-  const parsedAmount = Number(amount);
-  if (!parsedAmount || isNaN(parsedAmount) || parsedAmount < 100) {
+  // Fixed server-side, keyed by product type — the client can say WHICH thing
+  // it's paying for, never HOW MUCH. Keep these numbers in sync with the
+  // display prices in src/lib/config.js (CONSULTATION_FEE) and src/data.js
+  // (programs[].price).
+  const PRICES_PAISE = {
+    consultation: 49900, // ₹499 — talk to Arun first
+    plan_45day: 600000, // ₹6,000 — 45 Day Transformation, full enrollment
+    plan_wedding: 699900, // ₹6,999 — Wedding Transformation, full enrollment
+  };
+
+  const amount = PRICES_PAISE[type];
+  if (!amount) {
     return sendJson(res, 400, {
-      error: 'Invalid amount. Minimum amount is 100 paise (₹1).',
+      error: `Invalid or missing "type". Must be one of: ${Object.keys(PRICES_PAISE).join(', ')}.`,
     });
   }
 
@@ -109,10 +119,10 @@ export default async function handler(req, res) {
     });
 
     const orderOptions = {
-      amount: Math.round(parsedAmount),
+      amount,
       currency: currency || 'INR',
       receipt: receipt || `rcpt_${Date.now()}`,
-      notes: notes || {},
+      notes: { ...(notes || {}), type },
     };
 
     const order = await razorpay.orders.create(orderOptions);
