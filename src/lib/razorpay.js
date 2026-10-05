@@ -25,7 +25,7 @@ export function loadRazorpayScript() {
  * 3. On success, calls backend /api/verify-payment to verify signature
  */
 export async function initiateRazorpayPayment({
-  type = 'consultation', // 'consultation' | 'plan_45day' | 'plan_wedding' — server decides the amount
+  type, // 'plan_45day' | 'plan_wedding' — server decides the amount
   customer = {},
   title = 'Arun Kumar Coaching',
   description = '1:1 WhatsApp Consultation & Assessment',

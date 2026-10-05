@@ -96,13 +96,11 @@ export default async function handler(req, res) {
   const { currency = 'INR', receipt, notes, type } = body || {};
 
   // Fixed server-side, keyed by product type — the client can say WHICH thing
-  // it's paying for, never HOW MUCH. Keep these numbers in sync with the
-  // display prices in src/lib/config.js (CONSULTATION_FEE) and src/data.js
-  // (programs[].price).
+  // it's paying for, never HOW MUCH. Keep these in sync with the display prices
+  // in src/data.js (programs[].price).
   const PRICES_PAISE = {
-    consultation: 49900, // ₹499 — talk to Arun first
-    plan_45day: 600000, // ₹6,000 — 45 Day Transformation, full enrollment
-    plan_wedding: 699900, // ₹6,999 — Wedding Transformation, full enrollment
+    plan_45day: 600000, // ₹6,000 — 45 Day Transformation
+    plan_wedding: 699900, // ₹6,999 — Wedding Transformation
   };
 
   const amount = PRICES_PAISE[type];

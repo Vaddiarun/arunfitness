@@ -2,7 +2,7 @@ import { useRef, useState } from 'react';
 import BeforeAfter from './BeforeAfter';
 import { LogoMark } from './Chrome';
 import { useCountUp } from '../hooks/useReveal';
-import { wa, INSTAGRAM_URL, INSTAGRAM_HANDLE, EMAIL, PHONE, CONSULTATION_FEE } from '../lib/config';
+import { wa, INSTAGRAM_URL, INSTAGRAM_HANDLE, EMAIL, PHONE } from '../lib/config';
 import { usePayment } from '../context/PaymentContext';
 import {
   transformations,
@@ -113,7 +113,6 @@ export function Results() {
 }
 
 export function Categories() {
-  const { openPaymentModal } = usePayment();
   return (
     <section className="section">
       <div className="wrap pb-11">
@@ -131,13 +130,14 @@ export function Categories() {
               <div className="font-heading font-medium text-[25px] leading-tight tracking-[-0.02em]">{c.title}</div>
               <div className="text-[15px] leading-relaxed text-neutral-400">{c.body}</div>
             </div>
-            <button
-              type="button"
-              onClick={() => openPaymentModal({ topic: `${c.title} Program` })}
-              className="self-start px-[18px] py-3 border border-neutral-700 rounded-md text-[11px] tracking-[0.18em] uppercase text-neutral-200 transition-colors hover:border-accent hover:text-accent-200 cursor-pointer"
+            <a
+              href={wa(`Hi Arun, I'm interested in the ${c.title} program.`)}
+              target="_blank"
+              rel="noopener"
+              className="self-start px-[18px] py-3 border border-neutral-700 rounded-md text-[11px] tracking-[0.18em] uppercase text-neutral-200 transition-colors hover:border-accent hover:text-accent-200"
             >
-              {c.cta} (₹{CONSULTATION_FEE})
-            </button>
+              {c.cta}
+            </a>
           </div>
         ))}
       </div>
@@ -159,20 +159,19 @@ export function FortyFive() {
           <div className="flex flex-wrap gap-3.5">
             <button
               type="button"
-              onClick={() =>
-                openPaymentModal({ topic: '45-Day Transformation — Full Enrollment', type: 'plan_45day', amount: 6000 })
-              }
+              onClick={() => openPaymentModal({ topic: '45-Day Transformation — Full Enrollment', type: 'plan_45day', amount: 6000 })}
               className="btn-primary self-start cursor-pointer"
             >
               Enroll now — ₹6,000 <span className="text-base">→</span>
             </button>
-            <button
-              type="button"
-              onClick={() => openPaymentModal({ topic: '45-Day Transformation' })}
-              className="btn-ghost self-start cursor-pointer"
+            <a
+              href={wa("Hi Arun, I'm interested in your 45-day transformation program.")}
+              target="_blank"
+              rel="noopener"
+              className="btn-ghost self-start"
             >
-              Talk to Arun first (₹{CONSULTATION_FEE})
-            </button>
+              Chat with Arun first
+            </a>
           </div>
           <p className="m-0 max-w-[46ch] text-[12px] leading-relaxed text-neutral-500">
             Terms: 45 days is the structured program length, not a results guarantee — actual timeline can extend depending on your consistency, effort and support.
@@ -211,20 +210,19 @@ export function Wedding() {
           <div className="flex flex-wrap gap-3.5">
             <button
               type="button"
-              onClick={() =>
-                openPaymentModal({ topic: 'Wedding Transformation — Full Enrollment', type: 'plan_wedding', amount: 6999 })
-              }
+              onClick={() => openPaymentModal({ topic: 'Wedding Transformation — Full Enrollment', type: 'plan_wedding', amount: 6999 })}
               className="btn-primary self-start cursor-pointer"
             >
               Enroll now — ₹6,999
             </button>
-            <button
-              type="button"
-              onClick={() => openPaymentModal({ topic: 'Wedding Transformation' })}
-              className="btn-outline self-start cursor-pointer"
+            <a
+              href={wa("Hi Arun, I'm interested in a wedding transformation.")}
+              target="_blank"
+              rel="noopener"
+              className="btn-outline self-start"
             >
-              Talk to Arun first (₹{CONSULTATION_FEE})
-            </button>
+              Chat with Arun first
+            </a>
           </div>
           <p className="m-0 max-w-[46ch] text-[12px] leading-relaxed text-neutral-500">
             Terms: results and readiness by your wedding date depend on your consistency, effort and support, and on how much time remains before the date.
@@ -243,7 +241,6 @@ export function Wedding() {
 }
 
 export function FatToFit() {
-  const { openPaymentModal } = usePayment();
   return (
     <section className="section">
       <div className="wrap flex flex-col gap-12">
@@ -266,13 +263,14 @@ export function FatToFit() {
         <p className="reveal m-0 max-w-[56ch] text-lg leading-relaxed text-neutral-300">
           Your starting point doesn't matter as much as the system you follow consistently.
         </p>
-        <button
-          type="button"
-          onClick={() => openPaymentModal({ topic: 'Fat Loss Transformation' })}
-          className="reveal btn-outline self-start cursor-pointer"
+        <a
+          href={wa('Hi Arun, I want to start my fat-loss transformation.')}
+          target="_blank"
+          rel="noopener"
+          className="reveal btn-outline self-start"
         >
-          Start from where you are (₹{CONSULTATION_FEE})
-        </button>
+          Start from where you are
+        </a>
       </div>
     </section>
   );
@@ -343,7 +341,6 @@ export function Personalization() {
 }
 
 export function WhatsAppCoaching() {
-  const { openPaymentModal } = usePayment();
   return (
     <section className="section">
       <div className="wrap grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-14 items-center">
@@ -356,13 +353,14 @@ export function WhatsAppCoaching() {
           <p className="m-0 max-w-[42ch] text-[17px] leading-relaxed text-neutral-300">
             Accessibility, accountability and personal coaching — on the app you already use every day.
           </p>
-          <button
-            type="button"
-            onClick={() => openPaymentModal({ topic: '1:1 WhatsApp Coaching' })}
-            className="btn-outline self-start cursor-pointer"
+          <a
+            href={wa('Hi Arun, I want to know about your online personal training.')}
+            target="_blank"
+            rel="noopener"
+            className="btn-outline self-start"
           >
-            Chat with Arun (₹{CONSULTATION_FEE})
-          </button>
+            Chat with Arun
+          </a>
         </div>
         <div className="reveal w-full max-w-[420px] p-[22px] bg-surface rounded-lg shadow-md flex flex-col gap-3.5">
           {chatThread.map((m, i) => (
@@ -490,23 +488,21 @@ export function Programs() {
                 {p.price && (
                   <button
                     type="button"
-                    onClick={() =>
-                      openPaymentModal({ topic: `${p.title} — Full Enrollment`, type: p.payType, amount: p.price })
-                    }
+                    onClick={() => openPaymentModal({ topic: `${p.title} — Full Enrollment`, type: p.payType, amount: p.price })}
                     className="self-start px-[22px] py-3.5 rounded-md text-xs tracking-[0.16em] uppercase bg-accent-900 border border-accent text-accent-100 transition-colors hover:bg-accent-800 cursor-pointer flex items-center gap-2"
                   >
                     <span>Enroll now</span>
                     <span className="font-bold">• ₹{p.price.toLocaleString('en-IN')}</span>
                   </button>
                 )}
-                <button
-                  type="button"
-                  onClick={() => openPaymentModal({ topic: `${p.title}` })}
-                  className="self-start px-[22px] py-3.5 border border-accent rounded-md text-xs tracking-[0.16em] uppercase text-accent-200 transition-colors hover:bg-accent-900 hover:text-accent-100 cursor-pointer flex items-center gap-2"
+                <a
+                  href={p.href}
+                  target="_blank"
+                  rel="noopener"
+                  className="self-start px-[22px] py-3.5 border border-accent rounded-md text-xs tracking-[0.16em] uppercase text-accent-200 transition-colors hover:bg-accent-900 hover:text-accent-100"
                 >
-                  <span>{p.price ? 'Talk to Arun first' : p.cta}</span>
-                  <span className="text-accent-300 font-bold">• ₹{CONSULTATION_FEE}</span>
-                </button>
+                  {p.price ? 'Chat with Arun first' : p.cta}
+                </a>
                 {p.note && <p className="m-0 text-[11px] leading-relaxed text-neutral-500 max-w-[36ch]">{p.note}</p>}
               </div>
             </div>
@@ -518,7 +514,6 @@ export function Programs() {
 }
 
 export function FinalCta() {
-  const { openPaymentModal } = usePayment();
   return (
     <section className="px-6 py-[134px] border-t border-divider bg-[radial-gradient(120%_80%_at_50%_0%,#2b2741_0%,#161826_62%)]">
       <div className="max-w-[1000px] mx-auto flex flex-col items-center gap-[30px] text-center">
@@ -536,13 +531,9 @@ export function FinalCta() {
           <a href="#apply" className="btn-primary">
             Start my transformation →
           </a>
-          <button
-            type="button"
-            onClick={() => openPaymentModal({ topic: 'Transformation Consultation' })}
-            className="btn-ghost cursor-pointer"
-          >
-            WhatsApp Arun (₹{CONSULTATION_FEE})
-          </button>
+          <a href={wa('Hi Arun, I want to know about your online personal training.')} target="_blank" rel="noopener" className="btn-ghost">
+            WhatsApp Arun
+          </a>
         </div>
         <div className="flex flex-col items-center gap-2.5 px-[26px] py-5 border border-accent rounded-md">
           <div className="font-heading font-medium text-[clamp(20px,2.6vw,28px)] tracking-[-0.01em] text-accent-200">100% MONEY BACK</div>
@@ -555,7 +546,6 @@ export function FinalCta() {
 }
 
 export function Footer() {
-  const { openPaymentModal } = usePayment();
   return (
     <footer className="px-6 pt-[68px] pb-[134px] border-t border-divider">
       <div className="wrap grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-10">
@@ -574,13 +564,9 @@ export function Footer() {
           <a href={INSTAGRAM_URL} target="_blank" rel="noopener">
             Instagram
           </a>
-          <button
-            type="button"
-            onClick={() => openPaymentModal({ topic: 'Footer WhatsApp Inquiry' })}
-            className="text-left bg-transparent border-0 p-0 text-accent-300 hover:text-accent-200 cursor-pointer text-sm"
-          >
-            WhatsApp (₹{CONSULTATION_FEE})
-          </button>
+          <a href={wa('Hi Arun, I want to know about your online personal training.')} target="_blank" rel="noopener">
+            WhatsApp
+          </a>
           <a href="#apply">Apply</a>
         </div>
         <div className="flex flex-col gap-2.5 text-sm text-neutral-400">
@@ -594,22 +580,19 @@ export function Footer() {
 }
 
 export function FloatingCtas() {
-  const { openPaymentModal } = usePayment();
   return (
     <>
-      <button
-        type="button"
-        onClick={() => openPaymentModal({ topic: 'Floating WhatsApp Consultation' })}
-        aria-label="Connect with Arun on WhatsApp"
-        className="fixed right-5 bottom-[88px] z-[60] w-14 h-14 flex items-center justify-center border border-accent rounded-full bg-accent-900 shadow-md transition-colors hover:bg-accent-800 cursor-pointer group"
+      <a
+        href={wa('Hi Arun, I want to know about your online personal training.')}
+        target="_blank"
+        rel="noopener"
+        aria-label="WhatsApp Arun"
+        className="fixed right-5 bottom-[88px] z-[60] w-14 h-14 flex items-center justify-center border border-accent rounded-full bg-accent-900 shadow-md transition-colors hover:bg-accent-800"
       >
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#e7e5fe" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
           <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8z" />
         </svg>
-        <span className="absolute -top-1.5 -right-1.5 bg-accent-400 text-bg text-[10px] font-bold px-1.5 py-0.5 rounded-full shadow-sm">
-          ₹{CONSULTATION_FEE}
-        </span>
-      </button>
+      </a>
       <div className="fixed inset-x-0 bottom-0 z-[55] flex gap-2.5 px-4 py-3 bg-bg/90 backdrop-blur-md border-t border-divider">
         <a
           href="#apply"

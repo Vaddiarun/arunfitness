@@ -1,23 +1,14 @@
 import { createContext, useContext, useState } from 'react';
 import PaymentModal from '../components/PaymentModal';
-import { CONSULTATION_FEE } from '../lib/config';
-
 const PaymentContext = createContext({
   openPaymentModal: () => {},
   closePaymentModal: () => {},
 });
 
-const DEFAULTS = {
-  topic: 'Online Transformation Consultation',
-  type: 'consultation',
-  amount: CONSULTATION_FEE,
-  defaultDetails: {},
-};
-
 export function PaymentProvider({ children }) {
-  const [modalState, setModalState] = useState({ isOpen: false, ...DEFAULTS });
+  const [modalState, setModalState] = useState({ isOpen: false, topic: '', type: '', amount: 0, defaultDetails: {} });
 
-  const openPaymentModal = ({ topic = DEFAULTS.topic, type = DEFAULTS.type, amount = DEFAULTS.amount, defaultDetails = {} } = {}) => {
+  const openPaymentModal = ({ topic, type, amount, defaultDetails = {} }) => {
     setModalState({
       isOpen: true,
       topic,

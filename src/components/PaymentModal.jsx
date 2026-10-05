@@ -1,20 +1,8 @@
 import { useState, useEffect } from 'react';
 import { initiateRazorpayPayment } from '../lib/razorpay';
-import { wa, CONSULTATION_FEE } from '../lib/config';
+import { wa } from '../lib/config';
 
-const IS_PLAN = (type) => type === 'plan_45day' || type === 'plan_wedding';
-
-export default function PaymentModal({
-  isOpen,
-  onClose,
-  topic = 'Transformation Consultation',
-  type = 'consultation', // 'consultation' | 'plan_45day' | 'plan_wedding'
-  amount = CONSULTATION_FEE,
-  defaultDetails = {},
-}) {
-  const isPlan = IS_PLAN(type);
-  const feeLabel = isPlan ? 'Program Fee' : 'Consultation Fee';
-  const payLabel = isPlan ? `Pay ₹${amount} & Enroll` : `Pay ₹${amount} & Open WhatsApp`;
+export default function PaymentModal({ isOpen, onClose, topic, type, amount, defaultDetails = {} }) {
   const [name, setName] = useState(defaultDetails.name || '');
   const [phone, setPhone] = useState(defaultDetails.phone || defaultDetails.whatsapp || '');
   const [email, setEmail] = useState(defaultDetails.email || '');
@@ -81,7 +69,7 @@ export default function PaymentModal({
         email: email.trim(),
       },
       title: 'Arun Kumar Coaching',
-      description: isPlan ? `Full Enrollment - ${topic}` : `WhatsApp Consultation - ${topic}`,
+      description: `Full Enrollment - ${topic}`,
       notes: {
         topic: topic,
         whatsapp: phone.trim(),
@@ -89,9 +77,7 @@ export default function PaymentModal({
       onSuccess: (response) => {
         setIsLoading(false);
         const paymentId = response.razorpay_payment_id;
-        const msg = isPlan
-          ? `Hi Arun, I've paid ₹${amount} to enroll in ${topic}.\n\n• Payment ID: ${paymentId}\n• Name: ${name.trim()}\n\nI'm ready to start!`
-          : `Hi Arun, I've paid the ₹${amount} consultation fee.\n\n• Payment ID: ${paymentId}\n• Name: ${name.trim()}\n• Topic / Goal: ${topic}\n\nLet's discuss and design my plan!`;
+        const msg = `Hi Arun, I've paid ₹${amount} to enroll in ${topic}.\n\n• Payment ID: ${paymentId}\n• Name: ${name.trim()}\n\nI'm ready to start!`;
         const whatsappUrl = wa(msg);
 
         setPaymentSuccess({
@@ -146,9 +132,7 @@ export default function PaymentModal({
                 YOU'RE CONNECTED!
               </h3>
               <p className="text-neutral-300 text-sm max-w-[38ch] mx-auto mt-1">
-                {isPlan
-                  ? `Your ₹${paymentSuccess.amount} enrollment is confirmed. Tap below to start your 1-on-1 WhatsApp chat with Arun.`
-                  : `Your ₹${paymentSuccess.amount} consultation fee is confirmed. Tap below to start your 1-on-1 WhatsApp chat with Arun.`}
+                Your ₹{paymentSuccess.amount} enrollment is confirmed. Tap below to start your 1-on-1 WhatsApp chat with Arun.
               </p>
             </div>
 
@@ -206,28 +190,24 @@ export default function PaymentModal({
                 </span>
               </div>
               <h3 className="font-heading font-medium text-2xl sm:text-3xl m-0 tracking-tight text-white leading-tight">
-                {isPlan ? 'ENROLL WITH ARUN' : 'CONNECT WITH ARUN'}
+                ENROLL WITH ARUN
               </h3>
               <p className="text-neutral-400 text-xs sm:text-sm m-0 leading-relaxed">
-                {isPlan
-                  ? 'Direct 1-on-1 access to Arun Kumar on WhatsApp to start your program.'
-                  : 'Direct 1-on-1 access to Arun Kumar on WhatsApp. Initial fitness assessment, roadmap & program guidance.'}
+                Direct 1-on-1 access to Arun Kumar on WhatsApp to start your program.
               </p>
             </div>
 
             {/* Pricing Banner */}
             <div className="flex items-center justify-between p-3.5 bg-bg/90 border border-accent/40 rounded-md">
               <div className="flex flex-col">
-                <span className="text-[10px] tracking-[0.18em] uppercase text-neutral-400">{feeLabel}</span>
+                <span className="text-[10px] tracking-[0.18em] uppercase text-neutral-400">Program Fee</span>
                 <span className="text-2xl font-bold font-heading text-white">₹{amount}</span>
               </div>
               <div className="text-right">
                 <span className="inline-block px-2 py-0.5 rounded bg-accent-900/80 border border-accent/60 text-[10px] text-accent-200 tracking-wider uppercase font-medium">
                   Non-refundable
                 </span>
-                <div className="text-[10px] text-neutral-400 mt-1">
-                  {isPlan ? 'Confirms your enrollment' : "Confirms you're serious — Arun replies personally"}
-                </div>
+                <div className="text-[10px] text-neutral-400 mt-1">Confirms your enrollment</div>
               </div>
             </div>
 
@@ -301,7 +281,7 @@ export default function PaymentModal({
                   <span>Opening Razorpay Secure Checkout...</span>
                 ) : (
                   <>
-                    <span>{payLabel}</span>
+                    <span>Pay ₹{amount} &amp; Enroll</span>
                     <span className="text-base">→</span>
                   </>
                 )}
